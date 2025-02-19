@@ -11,20 +11,21 @@ import ru.practicum.shareit.user.repository.UserStorage;
 public class UserServiceImpl implements UserService {
 
     private final UserStorage userStorage;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto getUser(Long userId) {
-        return UserMapper.UserToUserDto(userStorage.getUser(userId));
+        return userMapper.UserToUserDto(userStorage.getUser(userId));
     }
 
     @Override
     public UserDto addUser(UserDto userDto) {
-        return UserMapper.UserToUserDto(userStorage.createUser(UserMapper.toUser(userDto)));
+        return userMapper.UserToUserDto(userStorage.createUser(userMapper.toUser(userDto)));
     }
 
     @Override
     public UserDto updateUser(Long userId, UserDto userDto) {
-        return UserMapper.UserToUserDto(userStorage.updateUser(userId, UserMapper.toUser(userDto)));
+        return userMapper.UserToUserDto(userStorage.updateUser(userId, userMapper.toUser(userDto)));
     }
 
     @Override

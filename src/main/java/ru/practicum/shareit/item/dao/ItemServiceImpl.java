@@ -15,29 +15,31 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemStorage itemStorage;
     private final UserStorage userStorage;
+    private final ItemMapper itemMapper;
+
 
     @Override
     public ItemDto addNewItem(Long userId, ItemDto itemDto) {
-        return ItemMapper.toItemDto(
-                itemStorage.addNewItem(userId, ItemMapper.toItem(itemDto, userStorage.getUser(userId))));
+        return itemMapper.toItemDto(
+                itemStorage.addNewItem(userId, itemMapper.toItem(itemDto, userStorage.getUser(userId))));
     }
 
     @Override
     public ItemDto updateItem(Long userId, Long itemId, ItemDto itemDto) {
-        return ItemMapper.toItemDto(
-                itemStorage.updateItem(itemId, userId, ItemMapper.toItem(itemDto, userStorage.getUser(userId))));
+        return itemMapper.toItemDto(
+                itemStorage.updateItem(itemId, userId, itemMapper.toItem(itemDto, userStorage.getUser(userId))));
     }
 
     @Override
     public Collection<ItemDto> getAllItems(Long userId) {
         return itemStorage.getAllItems(userId).stream()
-                .map(ItemMapper::toItemDto)
+                .map(itemMapper::toItemDto)
                 .toList();
     }
 
     @Override
     public ItemDto getItem(Long userId, Long itemId) {
-        return ItemMapper.toItemDto(itemStorage.getItem(userId, itemId));
+        return itemMapper.toItemDto(itemStorage.getItem(userId, itemId));
     }
 
     @Override
@@ -48,7 +50,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Collection<ItemDto> searchItems(Long userId, String text) {
         return itemStorage.searchItems(userId, text).stream()
-                .map(ItemMapper::toItemDto)
+                .map(itemMapper::toItemDto)
                 .toList();
     }
 }
