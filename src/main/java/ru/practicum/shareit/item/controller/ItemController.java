@@ -39,11 +39,10 @@ public class ItemController {
     public ResponseEntity<ItemDto> updateItem(@RequestHeader("X-Sharer-User-Id") Long userId,
                                               @PathVariable @Valid Long itemId,
                                               @RequestBody ItemDto itemDto) {
-        return ResponseEntity.ok().body(itemService.updateItem(itemId, userId, itemDto));
+        return ResponseEntity.ok().body(itemService.updateItem(userId, itemId, itemDto));
     }
 
     @DeleteMapping("/{itemId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteItem(@RequestHeader("X-Sharer-User-Id") Long userId,
                                            @PathVariable Long itemId) {
         itemService.deleteItem(userId, itemId);

@@ -2,16 +2,15 @@ package ru.practicum.shareit.item.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.repository.UserStorage;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 public class ItemStorageImpl implements ItemStorage {
 
@@ -26,8 +25,7 @@ public class ItemStorageImpl implements ItemStorage {
             throw new NotFoundException("Пользователя с таким id нет");
         }
         item.setOwner(userStorage.getUser(userId));
-        if ((item.getName() == null || item.getName().isBlank())
-                || (item.getDescription() == null || item.getDescription().isBlank())) {
+        if ((item.getName() == null || item.getName().isBlank()) || (item.getDescription() == null || item.getDescription().isBlank())) {
             throw new IllegalArgumentException("Fields cannot be empty");
         }
         item.setId(id);
@@ -54,7 +52,7 @@ public class ItemStorageImpl implements ItemStorage {
         if (item.getAvailable() != null) {
             updatedItem.setAvailable(item.getAvailable());
         }
-        items.put(itemId, item);
+        items.put(itemId, updatedItem);
         return item;
     }
 
@@ -90,14 +88,14 @@ public class ItemStorageImpl implements ItemStorage {
     @Override
     public Collection<Item> searchItems(Long userId, String text) {
         if (text == null || text.isBlank()) {
-            return List.of();
+            return Collections.emptyList();
         }
         String textToLowerCase = text.toLowerCase();
         return items.values().stream()
                 .filter(item -> (item.getDescription().toLowerCase().contains(textToLowerCase)
                         || item.getName().toLowerCase().contains(textToLowerCase))
                         && item.getOwner().getId().equals(userId)
-                        && item.getAvailable().booleanValue())
-                .toList();
+                        && Boolean.TRUE.equals(item.getAvailable()))
+                .collect(Collectors.toList());
     }
 }
