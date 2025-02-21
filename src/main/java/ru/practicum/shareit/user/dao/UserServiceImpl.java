@@ -15,17 +15,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(Long userId) {
-        return userMapper.UserToUserDto(userStorage.getUser(userId));
+        return userMapper.userToUserDto(userStorage.getUser(userId));
     }
 
     @Override
     public UserDto addUser(UserDto userDto) {
-        return userMapper.UserToUserDto(userStorage.createUser(userMapper.toUser(userDto)));
+        return userMapper.userToUserDto(userStorage.createUser(userMapper.toUser(userDto)));
     }
 
     @Override
     public UserDto updateUser(Long userId, UserDto userDto) {
-        return userMapper.UserToUserDto(userStorage.updateUser(userId, userMapper.toUser(userDto)));
+        return userMapper.userToUserDto(userStorage.updateUser(userId, userMapper.toUser(userDto)));
     }
 
     @Override
