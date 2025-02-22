@@ -8,7 +8,6 @@ import ru.practicum.shareit.item.dao.ItemService;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/items")
