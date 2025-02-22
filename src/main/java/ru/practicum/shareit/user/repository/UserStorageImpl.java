@@ -20,7 +20,7 @@ public class UserStorageImpl implements UserStorage {
     private Long id = 1L;
 
     @Override
-    public User createUser(User user) {
+    public User addUser(User user) {
         if (emails.contains(user.getEmail())) {
             throw new EmailValidException("Пользователь с таким email уже существует");
         }
@@ -49,7 +49,7 @@ public class UserStorageImpl implements UserStorage {
             updatedUser.setName(user.getName());
         }
         if (emails.contains(user.getEmail())) {
-            throw new EmailValidException("Пользователь с  email уже существует");
+            throw new EmailValidException("Пользователь с email уже существует");
         }
         if (user.getEmail() != null) {
             emails.remove(users.get(userId).getEmail());

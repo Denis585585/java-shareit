@@ -24,7 +24,8 @@ public class ItemStorageImpl implements ItemStorage {
             throw new NotFoundException("Пользователя с таким id нет");
         }
         item.setOwner(userStorage.getUser(userId));
-        if ((item.getName() == null || item.getName().isBlank()) || (item.getDescription() == null || item.getDescription().isBlank())) {
+        if ((item.getName() == null || item.getName().isBlank()) || (item.getDescription() == null
+                || item.getDescription().isBlank())) {
             throw new IllegalArgumentException("Fields cannot be empty");
         }
         item.setId(id);

@@ -23,13 +23,13 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUser(@PathVariable Long userId) {
-        return ResponseEntity.ok().body(userService.getUser(userId));
+        return ResponseEntity.ok(userService.getUser(userId));
     }
 
     @PatchMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long userId,
                                               @RequestBody UserDto userDto) {
-        return ResponseEntity.ok().body(userService.updateUser(userId, userDto));
+        return ResponseEntity.ok(userService.updateUser(userId, userDto));
     }
 
     @DeleteMapping("/{userId}")
