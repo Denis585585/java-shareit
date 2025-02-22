@@ -4,11 +4,11 @@ import ru.practicum.shareit.user.model.User;
 
 public interface UserStorage {
 
-    User createUser(User user);
+    User createUser(User userDto);
 
     User getUser(Long userId);
 
-    User updateUser(Long userId, User user);
+    User updateUser(Long userId, User userDto);
 
     void deleteUser(Long userId);
 }

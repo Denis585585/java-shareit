@@ -2,11 +2,10 @@ package ru.practicum.shareit.item.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.repository.UserStorage;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,14 +78,14 @@ public class ItemStorageImpl implements ItemStorage {
     }
 
     @Override
-    public Collection<Item> getAllItems(Long userId) {
+    public List<Item> getAllItems(Long userId) {
         return items.values().stream()
                 .filter(item -> item.getOwner().getId().equals(userId))
                 .toList();
     }
 
     @Override
-    public Collection<Item> searchItems(Long userId, String text) {
+    public List<Item> searchItems(Long userId, String text) {
         if (text == null || text.isBlank()) {
             return List.of();
         }

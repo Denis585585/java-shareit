@@ -1,4 +1,4 @@
-package ru.practicum.shareit.exception;
+package ru.practicum.shareit.exceptions;
 
 import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;

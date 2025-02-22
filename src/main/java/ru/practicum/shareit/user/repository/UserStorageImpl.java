@@ -2,8 +2,8 @@ package ru.practicum.shareit.user.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.practicum.shareit.exception.EmailValidException;
-import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exceptions.EmailValidException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public User getUser(Long userId) {
         if (!users.containsKey(userId)) {
-            throw new NotFoundException("User with id  not found");
+            throw new NotFoundException("Пользователь с таким id не найден");
         }
         return users.get(userId);
     }
