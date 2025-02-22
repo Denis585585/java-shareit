@@ -3,8 +3,8 @@ package ru.practicum.shareit.user.model;
 import lombok.*;
 
 
-@Builder
 @Data
+@Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class User {
