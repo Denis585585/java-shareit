@@ -6,26 +6,27 @@ import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.repository.UserStorage;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-@Repository
 @RequiredArgsConstructor
+@Repository
 public class ItemStorageImpl implements ItemStorage {
-
     private final Map<Long, Item> items = new HashMap<>();
     private Long id = 1L;
     private final UserStorage userStorage;
 
-
     @Override
-    public Item addNewItem(Long userId, Item item) {
+    public Item createItem(Long userId, Item item) {
         if (userStorage.getUser(userId) == null) {
-            throw new NotFoundException("Пользователя с таким id нет");
+            throw new NotFoundException("Пользователя с таким id не существует");
         }
         item.setOwner(userStorage.getUser(userId));
-        if ((item.getName() == null || item.getName().isBlank()) || (item.getDescription() == null || item.getDescription().isBlank())) {
-            throw new IllegalArgumentException("Fields cannot be empty");
+        if ((item.getName() == null || item.getName().isBlank())
+                || (item.getDescription() == null || item.getDescription().isBlank())) {
+            throw new IllegalArgumentException("Поля name и description не могут быть пустыми");
         }
         item.setId(id);
         items.put(item.getId(), item);
@@ -34,12 +35,23 @@ public class ItemStorageImpl implements ItemStorage {
     }
 
     @Override
-    public Item updateItem(Long userId, Long itemId, Item item) {
+    public Item getItem(Long userId, Long itemId) {
         if (!items.containsKey(itemId)) {
-            throw new NotFoundException("Items not found");
+            throw new NotFoundException("Предмет с таким id не найден");
         }
         if (!items.get(itemId).getOwner().getId().equals(userId)) {
-            throw new NotFoundException("Only its owner can edit an item");
+            throw new NotFoundException("Пользователя с таким id не существует");
+        }
+        return items.get(itemId);
+    }
+
+    @Override
+    public Item updateItem(Long userId, Long itemId, Item item) {
+        if (!items.containsKey(itemId)) {
+            throw new NotFoundException("Предмет с таким id не найден");
+        }
+        if (!items.get(itemId).getOwner().getId().equals(userId)) {
+            throw new NotFoundException("Редактировать предмет может только его владелец");
         }
         Item updatedItem = items.get(itemId);
         if (item.getName() != null) {
@@ -56,6 +68,17 @@ public class ItemStorageImpl implements ItemStorage {
     }
 
     @Override
+    public void deleteItem(Long userId, Long itemId) {
+        if (!items.containsKey(itemId)) {
+            throw new NotFoundException("Предмет с таким id не найден");
+        }
+        if (!items.get(itemId).getOwner().getId().equals(userId)) {
+            throw new NotFoundException("Удалить предмет может только его владелец");
+        }
+        items.remove(itemId);
+    }
+
+    @Override
     public Collection<Item> getAllItems(Long userId) {
         return items.values().stream()
                 .filter(item -> item.getOwner().getId().equals(userId))
@@ -63,38 +86,16 @@ public class ItemStorageImpl implements ItemStorage {
     }
 
     @Override
-    public Item getItem(Long userId, Long itemId) {
-        if (!items.containsKey(itemId)) {
-            throw new NotFoundException("Item not found");
-        }
-        if (!items.get(itemId).getOwner().getId().equals(userId)) {
-            throw new NotFoundException("User not found");
-        }
-        return items.get(itemId);
-    }
-
-    @Override
-    public void deleteItem(Long userId, Long itemId) {
-        if (!items.containsKey(itemId)) {
-            throw new NotFoundException("Item not found");
-        }
-        if (!items.get(itemId).getOwner().getId().equals(userId)) {
-            throw new NotFoundException("Only its owner can delete an item");
-        }
-        items.remove(itemId);
-    }
-
-    @Override
     public Collection<Item> searchItems(Long userId, String text) {
         if (text == null || text.isBlank()) {
-            return Collections.emptyList();
+            return List.of();
         }
         String textToLowerCase = text.toLowerCase();
         return items.values().stream()
                 .filter(item -> (item.getDescription().toLowerCase().contains(textToLowerCase)
                         || item.getName().toLowerCase().contains(textToLowerCase))
                         && item.getOwner().getId().equals(userId)
-                        && Boolean.TRUE.equals(item.getAvailable()))
-                .collect(Collectors.toList());
+                        && item.getAvailable().booleanValue())
+                .toList();
     }
 }

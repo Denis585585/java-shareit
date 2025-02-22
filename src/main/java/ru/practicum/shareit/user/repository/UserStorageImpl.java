@@ -1,7 +1,7 @@
 package ru.practicum.shareit.user.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exception.EmailValidException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.model.User;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 @RequiredArgsConstructor
-@Repository
+@Component
 public class UserStorageImpl implements UserStorage {
 
     private final Map<Long, User> users = new HashMap<>();
@@ -42,14 +42,15 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public User updateUser(Long userId, User user) {
         if (!users.containsKey(userId)) {
-            throw new NotFoundException("User with id not found");
+            throw new NotFoundException("Пользователь с таким id не найден");
         }
+
         User updatedUser = users.get(userId);
         if (user.getName() != null) {
             updatedUser.setName(user.getName());
         }
         if (emails.contains(user.getEmail())) {
-            throw new EmailValidException("Пользователь с  email уже существует");
+            throw new EmailValidException("Пользователь с таким email уже существует");
         }
         if (user.getEmail() != null) {
             emails.remove(users.get(userId).getEmail());
@@ -63,7 +64,7 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public void deleteUser(Long userId) {
         if (!users.containsKey(userId)) {
-            throw new NotFoundException("User with id = " + userId + " not found");
+            throw new NotFoundException("Пользователь с таким id не найден");
         }
         emails.remove(users.get(userId).getEmail());
         users.remove(userId);

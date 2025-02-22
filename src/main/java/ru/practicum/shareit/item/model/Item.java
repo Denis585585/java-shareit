@@ -1,12 +1,12 @@
 package ru.practicum.shareit.item.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import ru.practicum.shareit.user.model.User;
+
 
 @Data
 @RequiredArgsConstructor
-@Builder
-@AllArgsConstructor
 public class Item {
     private Long id;
     private String name;
@@ -15,3 +15,4 @@ public class Item {
     private User owner;
     private Long requestId;
 }
+

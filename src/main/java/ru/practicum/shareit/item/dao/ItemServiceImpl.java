@@ -8,7 +8,6 @@ import ru.practicum.shareit.item.repository.ItemStorage;
 import ru.practicum.shareit.user.repository.UserStorage;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,31 +15,22 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemStorage itemStorage;
     private final UserStorage userStorage;
-    private final ItemMapper itemMapper;
-
 
     @Override
-    public ItemDto addNewItem(Long userId, ItemDto itemDto) {
-        return itemMapper.toItemDto(
-                itemStorage.addNewItem(userId, itemMapper.toItem(itemDto, userStorage.getUser(userId))));
+    public ItemDto createItem(Long userId, ItemDto itemDto) {
+        return ItemMapper.toItemDto(
+                itemStorage.createItem(userId, ItemMapper.toItem(itemDto, userStorage.getUser(userId))));
     }
 
     @Override
     public ItemDto updateItem(Long userId, Long itemId, ItemDto itemDto) {
-        return itemMapper.toItemDto(
-                itemStorage.updateItem(userId, itemId, itemMapper.toItem(itemDto, userStorage.getUser(userId))));
-    }
-
-    @Override
-    public Collection<ItemDto> getAllItems(Long userId) {
-        return itemStorage.getAllItems(userId).stream()
-                .map(itemMapper::toItemDto)
-                .collect(Collectors.toList());
+        return ItemMapper.toItemDto(
+                itemStorage.updateItem(userId, itemId, ItemMapper.toItem(itemDto, userStorage.getUser(userId))));
     }
 
     @Override
     public ItemDto getItem(Long userId, Long itemId) {
-        return itemMapper.toItemDto(itemStorage.getItem(userId, itemId));
+        return ItemMapper.toItemDto(itemStorage.getItem(userId, itemId));
     }
 
     @Override
@@ -49,9 +39,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public Collection<ItemDto> getAllItems(Long userId) {
+        return itemStorage.getAllItems(userId).stream()
+                .map(ItemMapper::toItemDto)
+                .toList();
+    }
+
+    @Override
     public Collection<ItemDto> searchItems(Long userId, String text) {
         return itemStorage.searchItems(userId, text).stream()
-                .map(itemMapper::toItemDto)
-                .collect(Collectors.toList());
+                .map(ItemMapper::toItemDto)
+                .toList();
     }
 }
