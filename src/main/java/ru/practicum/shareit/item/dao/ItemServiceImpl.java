@@ -7,7 +7,7 @@ import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.repository.ItemStorage;
 import ru.practicum.shareit.user.repository.UserStorage;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -40,14 +40,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> getAllItems(Long userId) {
+    public Collection<ItemDto> getAllItems(Long userId) {
         return itemStorage.getAllItems(userId).stream()
                 .map(itemMapper::toItemDto)
                 .toList();
     }
 
     @Override
-    public List<ItemDto> searchItems(Long userId, String text) {
+    public Collection<ItemDto> searchItems(Long userId, String text) {
         return itemStorage.searchItems(userId, text).stream()
                 .map(itemMapper::toItemDto)
                 .toList();

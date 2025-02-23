@@ -3,15 +3,16 @@ package ru.practicum.shareit.item.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dao.ItemService;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
-@RequestMapping("/items")
+@RequestMapping(path = "/items")
 @RequiredArgsConstructor
 public class ItemController {
 
@@ -22,7 +23,7 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<ItemDto> addItem(@RequestHeader(SHARER_USER_ID) Long userId,
                                            @Valid @RequestBody ItemDto itemDto) {
-        return ResponseEntity.ok().body(itemService.createItem(userId, itemDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.createItem(userId, itemDto));
     }
 
     @GetMapping("/{itemId}")
@@ -46,13 +47,13 @@ public class ItemController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ItemDto>> getAllItems(@RequestHeader(SHARER_USER_ID) Long userId) {
+    public ResponseEntity<Collection<ItemDto>> getAllItems(@RequestHeader(SHARER_USER_ID) Long userId) {
         return ResponseEntity.ok().body(itemService.getAllItems(userId));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ItemDto>> searchItems(@RequestHeader(SHARER_USER_ID) Long userId,
-                                                     @RequestParam(required = false) String text) {
+    public ResponseEntity<Collection<ItemDto>> searchItems(@RequestHeader(SHARER_USER_ID) Long userId,
+                                                           @RequestParam(required = false) String text) {
         return ResponseEntity.ok().body(itemService.searchItems(userId, text));
     }
 }

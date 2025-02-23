@@ -2,6 +2,7 @@ package ru.practicum.shareit.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -16,7 +17,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        return ResponseEntity.ok().body(userService.createUser(userDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
     }
 
     @GetMapping("/{userId}")

@@ -22,7 +22,7 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public User createUser(User user) {
         if (emails.contains(user.getEmail())) {
-            throw new EmailValidException("Пользователь с таким email уже существует");
+            throw new EmailValidException("A user with this email= " + user.getEmail() + " already exists");
         }
         emails.add(user.getEmail());
         user.setId(id);
@@ -34,7 +34,7 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public User getUser(Long userId) {
         if (!users.containsKey(userId)) {
-            throw new NotFoundException("Пользователь с таким id не найден");
+            throw new NotFoundException("User with this id= " + userId + " not found");
         }
         return users.get(userId);
     }
@@ -42,7 +42,7 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public User updateUser(Long userId, User user) {
         if (!users.containsKey(userId)) {
-            throw new NotFoundException("Пользователь с таким id не найден");
+            throw new NotFoundException("User with this id= " + userId + " not found");
         }
 
         User updatedUser = users.get(userId);
@@ -50,7 +50,7 @@ public class UserStorageImpl implements UserStorage {
             updatedUser.setName(user.getName());
         }
         if (emails.contains(user.getEmail())) {
-            throw new EmailValidException("Пользователь с таким email уже существует");
+            throw new EmailValidException("A user with this email= " + user.getEmail() + " already exists");
         }
         if (user.getEmail() != null) {
             emails.remove(users.get(userId).getEmail());
@@ -64,7 +64,7 @@ public class UserStorageImpl implements UserStorage {
     @Override
     public void deleteUser(Long userId) {
         if (!users.containsKey(userId)) {
-            throw new NotFoundException("Пользователь с таким id не найден");
+            throw new NotFoundException("User with this id= " + userId + " not found");
         }
         emails.remove(users.get(userId).getEmail());
         users.remove(userId);

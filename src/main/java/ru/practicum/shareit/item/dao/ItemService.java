@@ -2,7 +2,7 @@ package ru.practicum.shareit.item.dao;
 
 import ru.practicum.shareit.item.dto.ItemDto;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface ItemService {
 
@@ -14,7 +14,7 @@ public interface ItemService {
 
     void deleteItem(Long userId, Long itemId);
 
-    List<ItemDto> getAllItems(Long userId);
+    Collection<ItemDto> getAllItems(Long userId);
 
-    List<ItemDto> searchItems(Long userId, String text);
+    Collection<ItemDto> searchItems(Long userId, String text);
 }
