@@ -2,10 +2,10 @@ package ru.practicum.shareit.item.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dao.ItemService;
 
@@ -16,7 +16,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class ItemController {
 
-    @Autowired
     private final ItemService itemService;
     private static final String SHARER_USER_ID = "X-Sharer-User-Id";
 
@@ -55,5 +54,12 @@ public class ItemController {
     public ResponseEntity<Collection<ItemDto>> searchItems(@RequestHeader(SHARER_USER_ID) Long userId,
                                                            @RequestParam(required = false) String text) {
         return ResponseEntity.ok().body(itemService.searchItems(userId, text));
+    }
+
+    @PostMapping("{itemId}/comment")
+    public ResponseEntity<CommentDto> addComment(@RequestHeader(SHARER_USER_ID) Long userId,
+                                                 @PathVariable @Valid Long itemId,
+                                                 @RequestBody @Valid CommentDto commentDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.addCommentToItem(userId, itemId, commentDto));
     }
 }

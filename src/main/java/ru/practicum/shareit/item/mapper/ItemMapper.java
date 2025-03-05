@@ -7,10 +7,16 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
+import java.time.LocalDateTime;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ItemMapper {
 
     ItemDto toItemDto(Item item);
+
+    @Mapping(source = "pastDateBooking", target = "pastDateBooking")
+    @Mapping(source = "nextDateBooking", target = "nextDateBooking")
+    ItemDto toItemDtoDate(Item item, LocalDateTime nextDateBooking, LocalDateTime pastDateBooking);
 
     @Mapping(source = "itemDto.id", target = "id")
     @Mapping(source = "itemDto.name", target = "name")
