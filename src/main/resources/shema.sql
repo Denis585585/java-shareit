@@ -1,0 +1,41 @@
+---Таблица пользователей
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name varchar (100) NOT NULL,
+    email varchar(255) NOT NULL UNIQUE
+);
+
+---Таблица предметов
+CREATE TABLE IF NOT EXISTS items (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name varchar (100) NOT NULL,
+    description varchar (100) NOT NULL,
+    owner_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    available BOOLEAN NOT NULL DEFAULT TRUE,
+    request_id BIGINT REFERENCES requests(id) ON DELETE CASCADE
+);
+
+---Таблица бронирований
+CREATE TABLE IF NOT EXISTS bookings (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    end_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    item_id BIGINT NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+    booker_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    status varchar(100) NOT NULL
+);
+
+---Таблица запросов
+CREATE TABLE IF NOT EXISTS requests (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    description varchar(100) NOT NULL,
+    requestor_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);
+
+---Таблица комментариев
+CREATE TABLE IF NOT EXISTS comments (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    text varchar(2000) NOT NULL,
+    item_id BIGINT NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+    author_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);
