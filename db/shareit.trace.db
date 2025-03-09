@@ -1,0 +1,672 @@
+2025-03-08 21:42:38.165922+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BOOKINGS" not found (this database is empty); SQL statement:
+DELETE FROM bookings [42104-224]
+2025-03-09 15:19:31.010939+03:00 database: flush
+org.h2.message.DbException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: D:/Программирование/shareit/db/shareit.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: D:/Программирование/shareit/db/shareit.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:439)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:292)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:124)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:78)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:221)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:189)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1431)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1502)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at ru.practicum.shareit.ShareItApp.main(ShareItApp.java:10)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: D:/Программирование/shareit/db/shareit.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: D:/Программирование/shareit/db/shareit.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 60 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: D:/Программирование/shareit/db/shareit.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 54 more
+2025-03-09 15:27:20.637873+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:21.091875+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:21.136874+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:21.503402+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:21.727320+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:21.929803+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:22.145502+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:22.342920+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:22.541841+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:22.767446+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:22.984032+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:23.184292+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:23.372286+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:23.652307+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:23.835818+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:24.051415+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:24.235133+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:24.437943+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:24.621460+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:24.838151+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:25.037364+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:25.225434+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:25.430059+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:25.707101+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:25.899874+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:26.121678+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:26.348837+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:26.528506+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:26.824457+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:26.981411+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:27.169415+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:27.431519+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:27.661617+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:27.861061+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:28.065104+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:28.288916+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:28.503914+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:28.693979+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:27:28.906076+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:51.050665+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:51.498949+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:51.516950+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:51.890693+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:52.093688+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:52.339502+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:52.559731+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:52.774552+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:52.949852+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:53.170851+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:53.384459+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:53.579301+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:53.779514+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:54.062374+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:54.289873+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:54.478511+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:54.632393+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:54.839116+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:55.035627+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:55.218695+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:55.434784+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:55.635787+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:55.851873+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:56.129423+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:56.331924+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:56.518102+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:56.703138+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:56.903335+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:57.198449+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:57.399894+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:57.601426+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:57.803163+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:57.975720+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:58.176022+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:58.382689+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:58.595949+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:58.794743+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:59.005802+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:33:59.204259+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:10.121191+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:10.579189+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:10.611194+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:10.971616+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:11.172135+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:11.362136+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:11.535342+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:11.704341+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:11.888343+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:12.101805+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:12.308693+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:12.498760+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:12.701706+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:13.046281+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:13.245613+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:13.431756+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:13.655178+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:13.865170+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:14.068981+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:14.255411+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:14.466325+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:14.683148+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:14.878103+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:15.126160+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:15.296415+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:15.501452+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:15.701167+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:15.900355+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:16.258062+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:16.428790+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:16.679288+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:16.887291+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:17.100121+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:17.330302+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:17.516516+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:17.719641+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:17.920368+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:18.105830+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:40:18.308350+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into public.users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:37.513354+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:37.979458+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:38.022455+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:38.405025+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:38.621756+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:38.819706+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:39.023069+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:39.208845+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:39.410592+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:39.609444+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:39.813452+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:40.014129+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:40.226467+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:40.569626+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:40.800624+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:41.036686+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:41.230621+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:41.415807+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:41.606809+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:41.802863+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:42.004041+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:42.219526+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:42.423461+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:42.688937+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:42.878938+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:43.078938+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:43.266078+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:43.469709+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:43.845408+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:44.043737+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:44.231552+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:44.432421+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:44.618861+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:44.822047+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:45.026473+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:45.213028+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:45.412067+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:45.629356+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:50:45.832567+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:51:41.765910+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BOOKINGS" not found (this database is empty); SQL statement:
+DELETE FROM bookings [42104-224]
+2025-03-09 15:53:54.423527+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BOOKINGS" not found (this database is empty); SQL statement:
+DELETE FROM bookings [42104-224]
+2025-03-09 15:55:34.604406+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+ALTER TABLE users ALTER COLUMN id RESTART WITH 1 [42104-224]
+2025-03-09 15:56:23.934826+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:24.415939+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:24.459337+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:24.846622+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:25.047923+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:25.265056+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:25.465938+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:25.642459+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:25.831642+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:26.062937+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:26.280052+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:26.505430+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:26.691652+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:27.050478+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:27.257551+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:27.471654+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:27.672962+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:27.845828+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:28.056408+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:28.269826+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:28.488170+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:28.692399+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:28.879614+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:29.117008+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:29.328227+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:29.485113+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:29.672808+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:29.858445+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:30.185028+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:30.369380+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:30.534997+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:30.732138+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:30.952149+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:31.138139+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:31.346871+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:31.574868+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:31.760088+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:31.970904+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
+2025-03-09 15:56:32.173055+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (email,name,id) values (?,?,default) [42104-224]
