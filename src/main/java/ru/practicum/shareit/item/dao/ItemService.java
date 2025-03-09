@@ -1,5 +1,7 @@
 package ru.practicum.shareit.item.dao;
 
+import ru.practicum.shareit.item.dto.CommentDto;
+import ru.practicum.shareit.item.dto.CommentNewDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import java.util.Collection;
@@ -16,5 +18,7 @@ public interface ItemService {
 
     Collection<ItemDto> getAllItems(Long userId);
 
-    Collection<ItemDto> searchItems(Long userId, String text);
+    Collection<ItemDto> searchItems(String text);
+
+    CommentDto addComment(Long userId, Long itemId, CommentNewDto commentDto);
 }
