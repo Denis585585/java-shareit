@@ -3,16 +3,15 @@ package ru.practicum.shareit.item.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ru.practicum.shareit.user.model.User;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class ItemDto {
 
@@ -28,13 +27,11 @@ public class ItemDto {
     @NotNull
     private Boolean available;
 
-    private User owner;
-
     private Long requestId;
 
-    private LocalDateTime nextDateBooking;
+    private LocalDateTime lastBooking;
 
-    private LocalDateTime pastDateBooking;
+    private LocalDateTime nextBooking;
 
-    private Collection<CommentDto> comments;
+    private List<CommentDto> comments;
 }

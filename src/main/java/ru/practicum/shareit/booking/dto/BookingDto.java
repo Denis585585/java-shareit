@@ -10,6 +10,8 @@ import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 
+
+
 @Data
 @AllArgsConstructor
 public class BookingDto {
@@ -17,13 +19,14 @@ public class BookingDto {
     private Long itemId;
     private Item item;
     private User booker;
-    private BookingStatus bookingStatus;
+    private BookingStatus status;
 
-    @NotNull
     @Future
+    @NotNull
     private LocalDateTime start;
 
-    @NotNull
     @Future
+    @NotNull
     private LocalDateTime end;
+
 }

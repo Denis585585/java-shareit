@@ -1,4 +1,4 @@
-package ru.practicum.shareit.booking.contoller;
+package ru.practicum.shareit.booking.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class BookingController {
     public ResponseEntity<BookingDto> approvedBooking(@RequestHeader(SHARER_USER_ID) Long ownerId,
                                                       @PathVariable Long bookingId,
                                                       @RequestParam Boolean approved) {
-        return ResponseEntity.ok().body(bookingService.approvedBooking(ownerId, bookingId, approved));
+        return ResponseEntity.ok().body(bookingService.updateBooking(ownerId, bookingId, approved));
     }
 
     @GetMapping("/{bookingId}")

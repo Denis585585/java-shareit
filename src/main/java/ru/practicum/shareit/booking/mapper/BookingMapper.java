@@ -1,7 +1,6 @@
 package ru.practicum.shareit.booking.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingNewDto;
@@ -15,7 +14,13 @@ public interface BookingMapper {
 
     BookingDto toBookingDto(Booking booking);
 
-    @Mapping(source = "bookingNewDto.itemId", target = "item.id")
-    @Mapping(source = "booker.id", target = "id")
-    Booking toBooking(BookingNewDto bookingNewDto, Item item, User booker, BookingStatus status);
+    static Booking toBooking(BookingNewDto bookingDto, Item item, User booker, BookingStatus status) {
+        Booking booking = new Booking();
+        booking.setItem(item);
+        booking.setBooker(booker);
+        booking.setStatus(status);
+        booking.setStart(bookingDto.getStart());
+        booking.setEnd(bookingDto.getEnd());
+        return booking;
+    }
 }

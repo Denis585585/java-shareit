@@ -14,10 +14,6 @@ public interface ItemMapper {
 
     ItemDto toItemDto(Item item);
 
-    @Mapping(source = "pastDateBooking", target = "pastDateBooking")
-    @Mapping(source = "nextDateBooking", target = "nextDateBooking")
-    ItemDto toItemDtoDate(Item item, LocalDateTime nextDateBooking, LocalDateTime pastDateBooking);
-
     @Mapping(source = "itemDto.id", target = "id")
     @Mapping(source = "itemDto.name", target = "name")
     @Mapping(source = "user", target = "owner")

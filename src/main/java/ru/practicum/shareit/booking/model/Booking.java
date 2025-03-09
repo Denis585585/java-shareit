@@ -9,10 +9,9 @@ import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 
-
+@Entity
 @Data
 @RequiredArgsConstructor
-@Entity
 @Table(name = "bookings")
 public class Booking {
 
@@ -20,21 +19,23 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, name = "start_date")
+    @Column(nullable = false, name = "start_time")
     private LocalDateTime start;
 
-    @Column(nullable = false, name = "end_date")
+    @Column(nullable = false, name = "end_time")
     private LocalDateTime end;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "item_id")
+    @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
     @ManyToOne
     @JoinColumn(name = "booker_id")
     private User booker;
 
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "status")
     private BookingStatus status;
+
 }

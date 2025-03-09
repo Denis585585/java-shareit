@@ -3,39 +3,40 @@ package ru.practicum.shareit.item.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 
 @Data
 @RequiredArgsConstructor
 @Entity
-@Table(name = "items", schema = "public")
+@Table(name = "items")
 public class Item {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @Column(nullable = false)
     private String description;
 
-    @Column(name = "available")
+    @Column(nullable = false, name = "is_available")
     private Boolean available;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @Column(name = "request_id")
-    private Long requestId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "request_id")
+    private ItemRequest request;
 
     @Transient
-    private Collection<Comment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 }
 

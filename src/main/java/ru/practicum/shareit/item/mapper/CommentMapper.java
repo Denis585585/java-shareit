@@ -8,12 +8,23 @@ import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CommentMapper {
 
+    @Mapping(source = "author.name", target = "authorName")
     CommentDto toCommentDto(Comment comment);
 
-    @Mapping(source = "item.id", target = "id")
-    @Mapping(source = "author", target = "author")
-    Comment toComment(String text, Item item, User author);
+    List<CommentDto> toCommentDto(Iterable<Comment> comments);
+
+    static Comment toComment(String text, Item item, User author) {
+        Comment comment = new Comment();
+        comment.setText(text);
+        comment.setItem(item);
+        comment.setAuthor(author);
+        comment.setCreated(LocalDateTime.now());
+        return comment;
+    }
 }
