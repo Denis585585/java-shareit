@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.dao;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.model.Booking;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
@@ -97,8 +98,7 @@ public class ItemServiceImpl implements ItemService {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException("User with ID= " + userId + " not found");
         }
-        LocalDateTime date = LocalDateTime.now();
-        Collection<Item> items = itemRepository.findAllItemsByUserId(userId);
+        Collection<Item> items = itemRepository.findByOwnerId(userId);
         Collection<Long> itemIds = items.stream()
                 .map(Item::getId)
                 .toList();
@@ -106,31 +106,22 @@ public class ItemServiceImpl implements ItemService {
                 .stream()
                 .collect(Collectors.groupingBy(comment -> comment.getItem().getId()));
         items.forEach(item -> item.setComments(comments.getOrDefault(item.getId(), List.of())));
-        Collection<Booking> bookings = bookingRepository.findAllByItemId(itemIds, date);
-        return items.stream()
-                .map(item -> {
-                    Booking lastBooking = bookings.stream()
-                            .filter(booking -> booking.getItem().equals(item)
-                                    && booking.getEndDate().isBefore(date))
-                            .max(Comparator.comparing(Booking::getEndDate))
-                            .orElse(null);
-                    Booking nextBooking = bookings.stream()
-                            .filter(booking -> booking.getItem().equals(item)
-                                    && booking.getStartDate().isAfter(date))
-                            .min(Comparator.comparing(Booking::getStartDate))
-                            .orElse(null);
-                    LocalDateTime lastBookingDate = lastBooking != null ? lastBooking.getEndDate() : null;
-                    LocalDateTime nextBookingDate = nextBooking != null ? nextBooking.getStartDate() : null;
-                    return itemMapper.toItemDtoDate(item, nextBookingDate, lastBookingDate);
-                }).collect(Collectors.toList());
+        Collection<ItemDto> itemDtos = items.stream()
+                .map(itemMapper::toItemDto)
+                .toList();
+        for (ItemDto itemDto : itemDtos) {
+            setLastAndNextBooking(itemDto);
+        }
+        return itemDtos;
     }
 
     @Override
-    public Collection<ItemDto> searchItems(Long userId, String text) {
+    public Collection<ItemDto> searchItems(String text) {
         if (text == null || text.isBlank()) {
             return Collections.emptyList();
         }
-        return itemRepository.searchItemByDescription(userId, text).stream()
+        Collection<Item> items = itemRepository.findByRequest(text);
+        return items.stream()
                 .map(itemMapper::toItemDto)
                 .collect(Collectors.toList());
     }
@@ -142,18 +133,39 @@ public class ItemServiceImpl implements ItemService {
                 .orElseThrow(() -> new NotFoundException("Item with ID= " + itemId + " not found"));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-        Collection<Booking> bookings = bookingRepository.findAllByItemAndBookerId(itemId, userId);
+        Collection<Booking> bookings = bookingRepository.findAllByItemIdAndBookerId(itemId, userId);
 
         for (Booking booking : bookings) {
-            if (booking.getBookingStatus() == BookingStatus.APPROVED
-                    && booking.getEndDate().isBefore(LocalDateTime.now())) {
+            if (booking.getStatus() == BookingStatus.APPROVED
+                    && booking.getEnd().isBefore(LocalDateTime.now())) {
                 Comment comment = commentMapper.toComment(commentDto.getText(), item, user);
                 commentRepository.save(comment);
                 return commentMapper.toCommentDto(comment);
             }
         }
-
         throw new RuntimeException("Нельзя оставить комментарий, если не бронировал предмет," +
                 " или бронирование не подтверждено");
     }
+
+    private void setLastAndNextBooking(ItemDto itemDto) {
+        LocalDateTime lastBooking = null;
+        LocalDateTime nextBooking = null;
+        LocalDateTime date = LocalDateTime.now();
+        Collection<Booking> bookings = bookingRepository.findAllByItemIdOrderByStartAsc(itemDto.getId());
+        for (Booking booking : bookings) {
+            if (booking.getStatus() == BookingStatus.REJECTED) {
+                return;
+            }
+            if (booking.getEnd().isBefore(date)) {
+                lastBooking = booking.getStart();
+            }
+            if (booking.getStart().isAfter(date)) {
+                nextBooking = booking.getEnd();
+                break;
+            }
+        }
+        itemDto.setPastDateBooking(lastBooking);
+        itemDto.setNextDateBooking(nextBooking);
+    }
 }
+

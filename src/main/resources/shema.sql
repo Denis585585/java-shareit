@@ -5,6 +5,12 @@ CREATE TABLE IF NOT EXISTS users (
     email varchar(255) NOT NULL UNIQUE
 );
 
+---Таблица запросов
+CREATE TABLE IF NOT EXISTS requests (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    description varchar(100) NOT NULL,
+    requestor_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);
 ---Таблица предметов
 CREATE TABLE IF NOT EXISTS items (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -25,12 +31,6 @@ CREATE TABLE IF NOT EXISTS bookings (
     status varchar(100) NOT NULL
 );
 
----Таблица запросов
-CREATE TABLE IF NOT EXISTS requests (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    description varchar(100) NOT NULL,
-    requestor_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
-);
 
 ---Таблица комментариев
 CREATE TABLE IF NOT EXISTS comments (

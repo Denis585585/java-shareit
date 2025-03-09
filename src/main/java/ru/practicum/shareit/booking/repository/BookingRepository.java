@@ -2,55 +2,51 @@ package ru.practicum.shareit.booking.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.util.BookingStatus;
-import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
 
+@Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    @Query("SELECT b " +
-            "FROM Booking as b" +
-            "WHERE b.item.id= ?1 " +
-            "AND b.status IN ?2 " +
-            "AND ?3 <= b.end.date " +
-            "AND ?4 >= b.start.date")
-    Collection<Booking> findAllRequaredDates(Long itemId, Set<BookingStatus> status, LocalDateTime startDate,
-                                             LocalDateTime endDate);
+    @Query("SELECT b FROM Booking b " +
+            "WHERE b.item.id = :itemId " +
+            "AND b.status IN (:status) " +
+            "AND :startDate <= b.end " +
+            "AND :endDate >= b.start")
+    Collection<Booking> findAllWithIntersectionDates(Long itemId, Set<BookingStatus> status,
+                                                     LocalDateTime startDate, LocalDateTime endDate);
 
-    Collection<Booking> findAllByItemAndBookerId(Long itemId, Long bookerId);
+    Collection<Booking> findAllByItemIdAndBookerId(Long itemId, Long bookerId);
 
-    Collection<Booking> findAllByBookerOrderByStartDesc(User booker); //ALL
+    Collection<Booking> findAllByBookerIdOrderByStartDesc(Long bookerId); //ALL
 
-    Collection<Booking> findAllByBookerAndStatusAndEndIsAfterOrderByStartDesc(User booker, BookingStatus status, //CURRENT
-                                                                              LocalDateTime date);
-
-    Collection<Booking> findAllByBookerAndStatusAndEndIsBeforeOrderByStartDesc(User booker, BookingStatus status, //PAST
-                                                                               LocalDateTime date);
-
-    Collection<Booking> findAllByBookerAndStatusAndStartIsAfterOrderByStartDesc(User booker, BookingStatus status, //FUTURE
+    Collection<Booking> findAllByBookerIdAndStatusAndEndIsAfterOrderByStartDesc(Long bookerId, BookingStatus status, //CURRENT
                                                                                 LocalDateTime date);
 
-    Collection<Booking> findAllByBookerAndStatusOrderByStartDesc(User booker, BookingStatus status); // WAITING and REJECTED
-
-    @Query("SELECT b " +
-            "FROM Booking as b " +
-            "WHERE b.item.id IN ?1 " +
-            "AND (b.end.date < ?2 OR b.start.date > ?2)")
-    Collection<Booking> findAllByItemId(Collection<Long> itemIds, LocalDateTime dateTime);
-
-    Collection<Booking> findAllByItemOwnerOrderByStartDesc(User owner); //ALL
-
-    Collection<Booking> findAllByItemOwnerAndStatusAndEndIsAfterOrderByStartDesc(User owner, BookingStatus status, //CURRENT
+    Collection<Booking> findAllByBookerIdAndStatusAndEndIsBeforeOrderByStartDesc(Long bookerId, BookingStatus status, //PAST
                                                                                  LocalDateTime date);
 
-    Collection<Booking> findAllByItemOwnerAndStatusAndEndIsBeforeOrderByStartDesc(User owner, BookingStatus status, //PAST
+    Collection<Booking> findAllByBookerIdAndStatusAndStartIsAfterOrderByStartDesc(Long bookerId, BookingStatus status, //FUTURE
+                                                                                LocalDateTime date);
+
+    Collection<Booking> findAllByBookerIdAndStatusOrderByStartDesc(Long bookerId, BookingStatus status); // WAITING and REJECTED
+
+    Collection<Booking> findAllByItemIdOrderByStartAsc(Long itemId);
+
+    Collection<Booking> findAllByItemOwnerIdOrderByStartDesc(Long ownerId); //ALL
+
+    Collection<Booking> findAllByItemOwnerIdAndStatusAndEndIsAfterOrderByStartDesc(Long ownerId, BookingStatus status, //CURRENT
+                                                                                 LocalDateTime date);
+
+    Collection<Booking> findAllByItemOwnerIdAndStatusAndEndIsBeforeOrderByStartDesc(Long ownerId, BookingStatus status, //PAST
                                                                                   LocalDateTime date);
 
-    Collection<Booking> findAllByItemOwnerAndStatusAndStartIsAfterOrderByStartDesc(User owner, BookingStatus status, //FUTURE
+    Collection<Booking> findAllByItemOwnerIdAndStatusAndStartIsAfterOrderByStartDesc(Long ownerId, BookingStatus status, //FUTURE
                                                                                    LocalDateTime date);
 
-    Collection<Booking> findAllByItemOwnerAndStatusOrderByStartDesc(User owner, BookingStatus status); // WAITING and REJECTED
+    Collection<Booking> findAllByItemOwnerIdAndStatusOrderByStartDesc(Long ownerId, BookingStatus status); // WAITING and REJECTED
 }

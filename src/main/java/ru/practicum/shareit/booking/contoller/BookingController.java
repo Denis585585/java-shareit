@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dao.BookingService;
 import ru.practicum.shareit.booking.dto.BookingDto;
+import ru.practicum.shareit.booking.dto.BookingNewDto;
 import ru.practicum.shareit.booking.util.BookingState;
 
 import java.util.Collection;
@@ -23,28 +24,28 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingDto> createBooking(@RequestHeader(SHARER_USER_ID) Long userId,
-                                                    @Valid @RequestBody BookingDto bookingDto) {
+                                                    @Valid @RequestBody BookingNewDto bookingDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.createBooking(userId, bookingDto));
     }
 
     @PatchMapping("/{bookingId}")
-    public ResponseEntity<BookingDto> approvedBooking(@RequestHeader(SHARER_USER_ID) Long userId,
+    public ResponseEntity<BookingDto> approvedBooking(@RequestHeader(SHARER_USER_ID) Long ownerId,
                                                       @PathVariable Long bookingId,
                                                       @RequestParam Boolean approved) {
-        return ResponseEntity.ok().body(bookingService.approvedBooking(userId, bookingId, approved));
+        return ResponseEntity.ok().body(bookingService.approvedBooking(ownerId, bookingId, approved));
     }
 
     @GetMapping("/{bookingId}")
     public ResponseEntity<BookingDto> getBooking(@RequestHeader(SHARER_USER_ID) Long userId,
                                                  @PathVariable Long bookingId) {
-        return ResponseEntity.ok().body(bookingService.getBooking(userId, bookingId));
+        return ResponseEntity.ok().body(bookingService.getBookingByOwnerId(userId, bookingId));
     }
 
     @GetMapping
-    public ResponseEntity<Collection<BookingDto>> getAllBookingByState(
-            @RequestHeader(SHARER_USER_ID) Long userId,
+    public ResponseEntity<Collection<BookingDto>> getBookingByState(
+            @RequestHeader(SHARER_USER_ID) Long bookerId,
             @RequestParam(required = false, defaultValue = "ALL") BookingState state) {
-        return ResponseEntity.ok().body(bookingService.getAllBookingStateByUser(userId, state));
+        return ResponseEntity.ok().body(bookingService.getAllBookingsByState(bookerId, state));
     }
 
     @GetMapping("/owner")

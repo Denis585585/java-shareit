@@ -51,9 +51,8 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Collection<ItemDto>> searchItems(@RequestHeader(SHARER_USER_ID) Long userId,
-                                                           @RequestParam(required = false) String text) {
-        return ResponseEntity.ok().body(itemService.searchItems(userId, text));
+    public ResponseEntity<Collection<ItemDto>> searchItems(@RequestParam(name = "text") String text) {
+        return ResponseEntity.ok().body(itemService.searchItems(text));
     }
 
     @PostMapping("{itemId}/comment")
