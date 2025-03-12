@@ -12,8 +12,12 @@ import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.booking.util.BookingState;
 import ru.practicum.shareit.booking.util.BookingStatus;
 import ru.practicum.shareit.exceptions.NotFoundException;
+import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
@@ -29,24 +33,28 @@ import java.util.Set;
 public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final ItemRepository itemRepository;
+    private final ItemMapper itemMapper;
     private final BookingMapper bookingMapper;
 
     @Override
     @Transactional
     public BookingDto createBooking(Long bookerId, BookingNewDto bookingDto) {
         User booker = getUser(bookerId);
+        UserDto bookerDto = userMapper.toUserDto(booker);
         Item item = getItem(bookingDto.getItemId());
         if (!item.getAvailable()) {
             throw new RuntimeException("The item has already been reserved by someone");
         }
+        ItemDto itemDto = itemMapper.toItemDto(item);
         Collection<Booking> bookings = bookingRepository.findAllWithIntersectionDates(bookingDto.getItemId(),
                 Set.of(BookingStatus.APPROVED), bookingDto.getStart(), bookingDto.getEnd());
         if (!bookings.isEmpty()) {
             throw new NotFoundException("Item is occupied on the specified dates");
         }
 
-        Booking booking = BookingMapper.toBooking(bookingDto, item, booker, BookingStatus.WAITING);
+        Booking booking = bookingMapper.toBooking(bookingDto, itemDto, bookerDto, BookingStatus.WAITING);
         log.info("Booking has been created");
         return bookingMapper.toBookingDto(bookingRepository.save(booking));
     }

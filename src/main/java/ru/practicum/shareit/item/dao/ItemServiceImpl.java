@@ -128,7 +128,7 @@ public class ItemServiceImpl implements ItemService {
 
         for (Booking booking : bookings) {
             if (booking.getStatus() == BookingStatus.APPROVED && booking.getEnd().isBefore(LocalDateTime.now())) {
-                Comment comment = CommentMapper.toComment(commentDto.getText(), item, user);
+                Comment comment = commentMapper.toComment(commentDto, item, user);
                 commentRepository.save(comment);
                 return commentMapper.toCommentDto(comment);
             }

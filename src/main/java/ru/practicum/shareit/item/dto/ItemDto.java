@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.practicum.shareit.user.dto.UserDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +27,8 @@ public class ItemDto {
 
     @NotNull
     private Boolean available;
+
+    private UserDto owner;
 
     private Long requestId;
 
