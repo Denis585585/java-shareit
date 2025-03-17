@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS users (
     name varchar (255) NOT NULL,
     email varchar(512) NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (id),
-    CONSTRAINT UQ_USER_EMAIL UNIQUE (email)
 );
 
 ---Таблица запросов

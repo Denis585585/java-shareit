@@ -37,12 +37,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto updateUser(Long userId, UserDto userDto) {
         User updatedUser = userMapper.toUser(findUser(userId));
-        if (userDto.getName() != null) {
-            updatedUser.setName(userDto.getName());
-        }
-        if (userDto.getEmail() != null) {
-            updatedUser.setEmail(userDto.getEmail());
-        }
+        if (userDto.getName() != null) updatedUser.setName(userDto.getName());
+
+        if (userDto.getEmail() != null) updatedUser.setEmail(userDto.getEmail());
+
         log.info("User with ID= {} has been updated", userId);
         return userMapper.toUserDto(userRepository.save(updatedUser));
     }
