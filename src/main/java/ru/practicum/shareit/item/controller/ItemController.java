@@ -2,12 +2,13 @@ package ru.practicum.shareit.item.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dao.ItemService;
+import ru.practicum.shareit.item.dto.CommentDto;
+import ru.practicum.shareit.item.dto.CommentNewDto;
+import ru.practicum.shareit.item.dto.ItemDto;
 
 import java.util.Collection;
 
@@ -16,7 +17,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class ItemController {
 
-    @Autowired
     private final ItemService itemService;
     private static final String SHARER_USER_ID = "X-Sharer-User-Id";
 
@@ -52,8 +52,14 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Collection<ItemDto>> searchItems(@RequestHeader(SHARER_USER_ID) Long userId,
-                                                           @RequestParam(required = false) String text) {
-        return ResponseEntity.ok().body(itemService.searchItems(userId, text));
+    public ResponseEntity<Collection<ItemDto>> searchItems(@RequestParam(name = "text") String text) {
+        return ResponseEntity.ok().body(itemService.searchItems(text));
+    }
+
+    @PostMapping("{itemId}/comment")
+    public ResponseEntity<CommentDto> addComment(@RequestHeader(SHARER_USER_ID) Long userId,
+                                                 @PathVariable @Valid Long itemId,
+                                                 @RequestBody @Valid CommentNewDto commentDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.addComment(userId, itemId, commentDto));
     }
 }
