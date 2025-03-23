@@ -2,14 +2,12 @@ package ru.practicum.shareit.request.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.dao.ItemRequestService;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/requests")
