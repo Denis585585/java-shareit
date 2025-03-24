@@ -14,7 +14,7 @@ import ru.practicum.shareit.item.controller.ItemController;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.CommentNewDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.service.ItemServiceImpl;
+import ru.practicum.shareit.item.dao.ItemServiceImpl;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -137,10 +137,11 @@ public class ItemControllerTest {
 
     @Test
     void addItemComment() throws Exception {
-        CommentNewDto comment = new CommentNewDto(commentDto.getText());
+        CommentNewDto comment = new CommentNewDto(1L, commentDto.getText());
         CommentDto commentDto = new CommentDto(1L, comment.getText(), "name", LocalDateTime.now());
 
-        when(itemService.addComment(anyLong(), anyLong(), any(CommentNewDto.class))).thenReturn(commentDto);
+        when(itemService.addComment(anyLong(), anyLong(), any(CommentNewDto.class)))
+                .thenReturn(commentDto);
 
         mvc.perform(post("/items/{itemId}/comment", itemId)
                         .content(objectMapper.writeValueAsString(comment))

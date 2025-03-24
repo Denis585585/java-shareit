@@ -89,7 +89,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Collection<BookingDto> getAllBookingsByState(Long bookerId, BookingState state) {
+    public List<BookingDto> getAllBookingsByState(Long bookerId, BookingState state) {
         User user = getUser(bookerId);
         Collection<Booking> bookings = switch (state) {
             case ALL -> bookingRepository.findAllByBookerIdOrderByStartDesc(user.getId());
@@ -112,7 +112,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Collection<BookingDto> getBookingsStateByOwner(Long ownerId, BookingState state) {
+    public List<BookingDto> getBookingsStateByOwner(Long ownerId, BookingState state) {
         User user = getUser(ownerId);
         Collection<Booking> bookings = switch (state) {
             case ALL -> bookingRepository.findAllByItemOwnerIdOrderByStartDesc(user.getId());

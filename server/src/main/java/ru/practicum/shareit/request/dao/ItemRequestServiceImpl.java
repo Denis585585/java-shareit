@@ -40,14 +40,14 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     }
 
     @Override
-    public Collection<ItemRequestDto> getAllUserRequests(Long userId) {
+    public List<ItemRequestDto> getAllUserRequests(Long userId) {
         User user = getUser(userId);
-        Collection<ItemRequestDto> itemRequestDtos = itemRequestRepository
+        List<ItemRequestDto> itemRequestDtos = itemRequestRepository
                 .findAllByRequesterIdOrderByCreatedDesc(user.getId())
                 .stream()
                 .map(itemRequestMapper::toItemRequestDto)
                 .toList();
-        Collection<Long> itemRequestIds = itemRequestDtos.stream()
+        List<Long> itemRequestIds = itemRequestDtos.stream()
                 .map(ItemRequestDto::getId)
                 .toList();
         Map<Long, List<Item>> itemsMap = itemRepository.findAllByRequestIdIn(itemRequestIds)

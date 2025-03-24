@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.exceptions.NotFoundException;
@@ -16,11 +15,13 @@ import ru.practicum.shareit.item.dto.CommentNewDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
-import ru.practicum.shareit.item.service.ItemServiceImpl;
+import ru.practicum.shareit.item.dao.ItemServiceImpl;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.ItemRequestRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
+import ru.practicum.shareit.booking.util.BookingStatus;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -156,7 +157,7 @@ public class ItemServiceTest {
     @Test
     void addComment() {
         CommentDto comment = itemService.addComment(userId, itemId,
-                new CommentNewDto(commentDto.getText()));
+                new CommentNewDto(1L, commentDto.getText()));
         assertNotNull(comment);
         assertEquals(commentDto.getText(), comment.getText());
     }
@@ -164,19 +165,19 @@ public class ItemServiceTest {
     @Test
     void addCommentWithNonExistingItem() {
         assertThrows(NotFoundException.class, () -> itemService.addComment(userId, 99L,
-                new CommentNewDto(commentDto.getText())));
+                new CommentNewDto(1L, commentDto.getText())));
     }
 
     @Test
     void addCommentWithNonExistingUser() {
         assertThrows(NotFoundException.class, () -> itemService.addComment(99L, itemId,
-                new CommentNewDto(commentDto.getText())));
+                new CommentNewDto(1L,commentDto.getText())));
     }
 
     @Test
     void addCommentWithNonBookedItem() {
         bookingRepository.deleteById(bookingId);
         assertThrows(RuntimeException.class, () -> itemService.addComment(userId, itemId,
-                new CommentNewDto(commentDto.getText())));
+                new CommentNewDto(1L, commentDto.getText())));
     }
 }

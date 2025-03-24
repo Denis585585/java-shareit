@@ -86,7 +86,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Collection<ItemDto> getAllItems(Long userId) {
+    public List<ItemDto> getAllItems(Long userId) {
         List<Item> items = itemRepository.findByOwnerId(userId);
         List<Long> itemIds = items.stream()
                 .map(Item::getId)
@@ -109,7 +109,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Collection<ItemDto> searchItems(String text) {
+    public List<ItemDto> searchItems(String text) {
         if (text == null || text.isBlank()) {
             return List.of();
         }

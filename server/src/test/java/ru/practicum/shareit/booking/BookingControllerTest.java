@@ -13,8 +13,10 @@ import ru.practicum.shareit.booking.controller.BookingController;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingNewDto;
 import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.booking.service.BookingService;
+import ru.practicum.shareit.booking.dao.BookingService;
 import ru.practicum.shareit.booking.repository.BookingRepository;
+import ru.practicum.shareit.booking.util.BookingState;
+import ru.practicum.shareit.booking.util.BookingStatus;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
@@ -127,8 +129,8 @@ public class BookingControllerTest {
                 .id(1L)
                 .start(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).plusMinutes(1))
                 .end(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).plusDays(1))
-                .item(item)
-                .booker(user)
+                .item(itemDto)
+                .booker(userDto)
                 .status(BookingStatus.WAITING)
                 .build();
 
@@ -151,8 +153,8 @@ public class BookingControllerTest {
                     .id(i)
                     .start(LocalDateTime.now().plusMinutes(1))
                     .end(LocalDateTime.now().plusDays(1))
-                    .item(item)
-                    .booker(user)
+                    .item(itemDto)
+                    .booker(userDto)
                     .status(BookingStatus.WAITING)
                     .build());
         }
@@ -170,7 +172,7 @@ public class BookingControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createBookingDto))
                         .header("X-Sharer-User-Id", userId))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(bookingDto.getId()), Long.class))
                 .andExpect(jsonPath("$.status", is(bookingDto.getStatus().name())));
@@ -202,7 +204,7 @@ public class BookingControllerTest {
 
     @Test
     void getBookingByIdTest() throws Exception {
-        when(bookingService.findBookingByIdAndBookerIdOrOwnerId(anyLong(), anyLong()))
+        when(bookingService.getBookingByOwnerId(anyLong(), anyLong()))
                 .thenReturn(bookingDto);
 
         mvc.perform(get("/bookings/" + bookingDto.getId())
@@ -212,14 +214,14 @@ public class BookingControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(bookingDto.getId()), Long.class));
 
-        verify(bookingService, times(1)).findBookingByIdAndBookerIdOrOwnerId(eq(bookingDto.getId()), eq(bookingDto.getBooker().getId()));
+        verify(bookingService, times(1)).getBookingByOwnerId(eq(bookingDto.getId()), eq(bookingDto.getBooker().getId()));
     }
 
     @Test
     void getAllUsersBookingByStatusTest() throws Exception {
         Long userId = 1L;
 
-        when(bookingService.findBookingsByState(Mockito.anyLong(), Mockito.any()))
+        when(bookingService.getAllBookingsByState(Mockito.anyLong(), Mockito.any()))
                 .thenReturn(bookingDtoList);
 
         mvc.perform(get("/bookings")
@@ -230,14 +232,14 @@ public class BookingControllerTest {
                 .andExpect(jsonPath("$", hasSize(bookingDtoList.size())))
                 .andExpect(jsonPath("$[0].id", is(bookingDtoList.getFirst().getId().intValue())));
 
-        verify(bookingService, times(1)).findBookingsByState(eq(userId), eq(BookingState.ALL));
+        verify(bookingService, times(1)).getAllBookingsByState(eq(userId), eq(BookingState.ALL));
     }
 
     @Test
     void getAllBookingForUserItemsByStatusTest() throws Exception {
         Long userId = 1L;
 
-        when(bookingService.findBookingsByOwnerId(anyLong(), any()))
+        when(bookingService.getBookingsStateByOwner(anyLong(), any()))
                 .thenReturn(bookingDtoList);
 
         mvc.perform(get("/bookings/owner")
@@ -248,7 +250,7 @@ public class BookingControllerTest {
                 .andExpect(jsonPath("$.size()", is(bookingDtoList.size())))
                 .andExpect(jsonPath("$[0].id", is(bookingDtoList.getFirst().getId().intValue())));
 
-        verify(bookingService, times(1)).findBookingsByOwnerId(eq(userId), eq(BookingState.ALL));
+        verify(bookingService, times(1)).getBookingsStateByOwner(eq(userId), eq(BookingState.ALL));
     }
 
     private String generateRandomString(int targetStringLength) {

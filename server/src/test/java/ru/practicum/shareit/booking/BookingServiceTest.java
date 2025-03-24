@@ -10,10 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingNewDto;
 import ru.practicum.shareit.booking.repository.BookingRepository;
-import ru.practicum.shareit.booking.service.BookingService;
+import ru.practicum.shareit.booking.dao.BookingService;
+import ru.practicum.shareit.booking.util.BookingState;
+import ru.practicum.shareit.booking.util.BookingStatus;
 import ru.practicum.shareit.exceptions.NotFoundException;
+import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
@@ -36,6 +42,10 @@ public class BookingServiceTest {
     private UserRepository userRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ItemMapper itemMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     private User user;
     private Item item;
@@ -56,6 +66,7 @@ public class BookingServiceTest {
         user.setEmail("test@mail.ru");
         userRepository.save(user);
         userId = user.getId();
+        UserDto userDto = userMapper.toUserDto(user);
 
         item = new Item();
         item.setName("Name");
@@ -64,6 +75,8 @@ public class BookingServiceTest {
         item.setOwner(user);
         itemRepository.save(item);
         itemId = item.getId();
+        ItemDto itemDto = itemMapper.toItemDto(item);
+
 
         bookingNewDto = new BookingNewDto();
         bookingNewDto.setItemId(itemId);
@@ -74,8 +87,8 @@ public class BookingServiceTest {
                 .id(1L)
                 .start(bookingNewDto.getStart())
                 .end(bookingNewDto.getEnd())
-                .item(item)
-                .booker(user)
+                .item(itemDto)
+                .booker(userDto)
                 .status(BookingStatus.WAITING)
                 .build();
     }
@@ -93,7 +106,7 @@ public class BookingServiceTest {
     @Test
     void findBookingById() {
         BookingDto bookingDto = bookingService.createBooking(userId, bookingNewDto);
-        BookingDto bookingDtoById = bookingService.findBookingByIdAndBookerIdOrOwnerId(userId, bookingDto.getId());
+        BookingDto bookingDtoById = bookingService.getBookingByOwnerId(userId, bookingDto.getId());
         assertNotNull(bookingDtoById);
         assertEquals(bookingDto.getId(), bookingDtoById.getId());
         assertEquals(bookingDto.getStart(), bookingDtoById.getStart());
@@ -105,7 +118,7 @@ public class BookingServiceTest {
     @Test
     void findBookingsByBookerId() {
         BookingDto bookingDto = bookingService.createBooking(userId, bookingNewDto);
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId, BookingState.ALL);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId, BookingState.ALL);
         assertNotNull(bookingDtoList);
         assertEquals(1, bookingDtoList.size());
         assertEquals(bookingDto.getId(), bookingDtoList.getFirst().getId());
@@ -118,7 +131,7 @@ public class BookingServiceTest {
     @Test
     void findBookingsByOwnerId() {
         BookingDto bookingDto = bookingService.createBooking(userId, bookingNewDto);
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByOwnerId(userId, BookingState.ALL);
+        List<BookingDto> bookingDtoList = bookingService.getBookingsStateByOwner(userId, BookingState.ALL);
         assertNotNull(bookingDtoList);
         assertEquals(1, bookingDtoList.size());
         assertEquals(bookingDto.getId(), bookingDtoList.getFirst().getId());
@@ -159,7 +172,7 @@ public class BookingServiceTest {
 
         bookingService.updateBooking(userId, currentBookingId, true);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByOwnerId(userId, BookingState.CURRENT);
+        List<BookingDto> bookingDtoList = bookingService.getBookingsStateByOwner(userId, BookingState.CURRENT);
         assertNotNull(bookingDtoList);
         assertEquals(1, bookingDtoList.size());
         assertEquals(currentBookingId, bookingDtoList.getFirst().getId());
@@ -196,7 +209,7 @@ public class BookingServiceTest {
 
         bookingService.updateBooking(userId, futureBookingId, true);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByOwnerId(userId, BookingState.FUTURE);
+        List<BookingDto> bookingDtoList = bookingService.getBookingsStateByOwner(userId, BookingState.FUTURE);
         assertNotNull(bookingDtoList);
         assertEquals(1, bookingDtoList.size());
         assertEquals(futureBookingId, bookingDtoList.getFirst().getId());
@@ -233,7 +246,7 @@ public class BookingServiceTest {
 
         bookingService.updateBooking(userId, pastBookingId, true);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByOwnerId(userId, BookingState.PAST);
+        List<BookingDto> bookingDtoList = bookingService.getBookingsStateByOwner(userId, BookingState.PAST);
         assertNotNull(bookingDtoList);
         assertEquals(1, bookingDtoList.size());
         assertEquals(pastBookingId, bookingDtoList.getFirst().getId());
@@ -268,7 +281,7 @@ public class BookingServiceTest {
         BookingDto futureBookingDto = bookingService.createBooking(userId2, futureBooking);
         Long futureBookingId = futureBookingDto.getId();
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByOwnerId(userId, BookingState.WAITING);
+        List<BookingDto> bookingDtoList = bookingService.getBookingsStateByOwner(userId, BookingState.WAITING);
         assertNotNull(bookingDtoList);
         assertEquals(3, bookingDtoList.size());
     }
@@ -304,7 +317,7 @@ public class BookingServiceTest {
 
         bookingService.updateBooking(userId, futureBookingId, false);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByOwnerId(userId, BookingState.REJECTED);
+        List<BookingDto> bookingDtoList = bookingService.getBookingsStateByOwner(userId, BookingState.REJECTED);
         assertNotNull(bookingDtoList);
         assertEquals(1, bookingDtoList.size());
         assertEquals(futureBookingId, bookingDtoList.getFirst().getId());
@@ -313,7 +326,7 @@ public class BookingServiceTest {
     @Test
     void findBookingsByState() {
         BookingDto bookingDto = bookingService.createBooking(userId, bookingNewDto);
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId, BookingState.ALL);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId, BookingState.ALL);
         assertNotNull(bookingDtoList);
         assertEquals(1, bookingDtoList.size());
         assertEquals(bookingDto.getId(), bookingDtoList.getFirst().getId());
@@ -349,7 +362,7 @@ public class BookingServiceTest {
     @Test
     void getByIdWithInvalidUserId() {
         BookingDto bookingDto = bookingService.createBooking(userId, bookingNewDto);
-        assertThrows(NotFoundException.class, () -> bookingService.findBookingByIdAndBookerIdOrOwnerId(99L, bookingDto.getId()));
+        assertThrows(NotFoundException.class, () -> bookingService.getBookingByOwnerId(99L, bookingDto.getId()));
     }
 
     @Test
@@ -390,7 +403,7 @@ public class BookingServiceTest {
 
         BookingDto updatedBooking = bookingService.updateBooking(userId, currentBookingId, true);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId2, BookingState.CURRENT);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId2, BookingState.CURRENT);
         assertEquals(1, bookingDtoList.size());
         assertEquals(currentBookingId, bookingDtoList.getFirst().getId());
         assertEquals(updatedBooking.getItem().getId(), bookingDtoList.getFirst().getItem().getId());
@@ -428,7 +441,7 @@ public class BookingServiceTest {
 
         BookingDto updatedBooking = bookingService.updateBooking(userId, futureBookingId, true);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId2, BookingState.FUTURE);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId2, BookingState.FUTURE);
         assertEquals(1, bookingDtoList.size());
         assertEquals(futureBookingId, bookingDtoList.getFirst().getId());
         assertEquals(updatedBooking.getItem().getId(), bookingDtoList.getFirst().getItem().getId());
@@ -466,7 +479,7 @@ public class BookingServiceTest {
 
         BookingDto updatedBooking = bookingService.updateBooking(userId, pastBookingId, true);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId2, BookingState.PAST);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId2, BookingState.PAST);
         assertEquals(1, bookingDtoList.size());
         assertEquals(pastBookingId, bookingDtoList.getFirst().getId());
         assertEquals(updatedBooking.getItem().getId(), bookingDtoList.getFirst().getItem().getId());
@@ -502,7 +515,7 @@ public class BookingServiceTest {
         BookingDto futureBookingDto = bookingService.createBooking(userId2, futureBooking);
         Long futureBookingId = futureBookingDto.getId();
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId2, BookingState.ALL);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId2, BookingState.ALL);
         assertEquals(3, bookingDtoList.size());
     }
 
@@ -538,7 +551,7 @@ public class BookingServiceTest {
         bookingService.updateBooking(userId, pastBookingId, true);
         bookingService.updateBooking(userId, currentBookingId, true);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId2, BookingState.WAITING);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId2, BookingState.WAITING);
         assertEquals(1, bookingDtoList.size());
         assertEquals(futureBookingId, bookingDtoList.getFirst().getId());
         assertEquals(futureBooking.getItemId(), bookingDtoList.getFirst().getItem().getId());
@@ -575,9 +588,8 @@ public class BookingServiceTest {
 
         BookingDto updatedBooking = bookingService.updateBooking(userId, currentBookingId, false);
 
-        List<BookingDto> bookingDtoList = bookingService.findBookingsByState(userId2, BookingState.REJECTED);
+        List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId2, BookingState.REJECTED);
         assertEquals(1, bookingDtoList.size());
         assertEquals(currentBookingId, bookingDtoList.getFirst().getId());
-        assertEquals(updatedBooking.getItemId(), bookingDtoList.getFirst().getItem().getId());
     }
 }

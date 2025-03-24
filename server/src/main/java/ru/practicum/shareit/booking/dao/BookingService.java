@@ -5,6 +5,7 @@ import ru.practicum.shareit.booking.dto.BookingNewDto;
 import ru.practicum.shareit.booking.util.BookingState;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface BookingService {
 
@@ -14,7 +15,7 @@ public interface BookingService {
 
     BookingDto getBookingByOwnerId(Long userId, Long bookingId);
 
-    Collection<BookingDto> getAllBookingsByState(Long userId, BookingState state);
+    List<BookingDto> getAllBookingsByState(Long userId, BookingState state);
 
-    Collection<BookingDto> getBookingsStateByOwner(Long userId, BookingState state);
+    List<BookingDto> getBookingsStateByOwner(Long userId, BookingState state);
 }
