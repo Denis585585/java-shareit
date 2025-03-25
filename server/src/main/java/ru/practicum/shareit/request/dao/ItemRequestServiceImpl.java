@@ -61,7 +61,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
     @Override
     public List<ItemRequestDto> getAllRequests(Long userId) {
-        User user = getUser(userId);
+        getUser(userId);
         return itemRequestRepository.findAll().stream()
                 .map(itemRequestMapper::toItemRequestDto)
                 .toList();
