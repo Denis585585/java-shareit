@@ -13,6 +13,7 @@ import ru.practicum.shareit.user.dto.UserDto;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface BookingMapper {
 
+    @Mapping(source = "booking.item.id", target = "itemId")
     BookingDto toBookingDto(Booking booking);
 
     @Mapping(source = "bookingDto.id", target = "id")

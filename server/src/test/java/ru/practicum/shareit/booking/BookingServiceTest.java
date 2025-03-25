@@ -591,5 +591,6 @@ public class BookingServiceTest {
         List<BookingDto> bookingDtoList = bookingService.getAllBookingsByState(userId2, BookingState.REJECTED);
         assertEquals(1, bookingDtoList.size());
         assertEquals(currentBookingId, bookingDtoList.getFirst().getId());
+        assertEquals(updatedBooking.getItemId(), bookingDtoList.getFirst().getItem().getId());
     }
 }

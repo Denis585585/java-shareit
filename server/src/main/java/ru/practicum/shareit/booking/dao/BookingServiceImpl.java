@@ -64,6 +64,7 @@ public class BookingServiceImpl implements BookingService {
     public BookingDto updateBooking(Long ownerId, Long bookingId, Boolean approved) {
         Booking booking = getBooking(bookingId);
         Item item = getItem(booking.getItem().getId());
+
         if (!item.getOwner().getId().equals(ownerId)) {
             throw new RuntimeException("User with ID= " + ownerId + " be not owner");
         }
