@@ -8,7 +8,7 @@ import ru.practicum.shareit.item.dto.ItemResponseDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
-import java.util.Collection;
+import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ItemMapper {
@@ -20,5 +20,8 @@ public interface ItemMapper {
     @Mapping(source = "user", target = "owner")
     Item toItem(ItemDto itemDto, User user);
 
-    Collection<ItemResponseDto> toItemResponseDto(Collection<Item> items);
+    @Mapping(source = "item.owner.id", target = "ownerId")
+    ItemResponseDto toItemResponseDto(Item item);
+
+    List<ItemResponseDto> toItemResponseDto(List<Item> items);
 }
