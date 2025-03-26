@@ -8,6 +8,7 @@ import ru.practicum.shareit.item.dto.ItemResponseDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
@@ -20,8 +21,16 @@ public interface ItemMapper {
     @Mapping(source = "user", target = "owner")
     Item toItem(ItemDto itemDto, User user);
 
-    @Mapping(source = "item.owner.id", target = "ownerId")
-    ItemResponseDto toItemResponseDto(Item item);
-
-    List<ItemResponseDto> toItemResponseDto(List<Item> items);
+    static List<ItemResponseDto> toItemResponseDto(List<Item> items) {
+        if (items == null) {
+            return List.of();
+        }
+        List<ItemResponseDto> itemResponseDtos = new ArrayList<>();
+        for (Item item : items) {
+            if (item != null) {
+                itemResponseDtos.add(new ItemResponseDto(item.getId(), item.getName(), item.getOwner().getId()));
+            }
+        }
+        return itemResponseDtos;
+    }
 }

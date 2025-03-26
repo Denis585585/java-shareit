@@ -54,7 +54,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
                 .collect(Collectors.groupingBy(o -> o.getRequest().getId()));
 
         for (ItemRequestDto itemRequestDto : itemRequestDtos) {
-            itemRequestDto.setItems(itemMapper.toItemResponseDto(itemsMap.getOrDefault(itemRequestDto.getId(), List.of())));
+            itemRequestDto.setItems(ItemMapper.toItemResponseDto(itemsMap.getOrDefault(itemRequestDto.getId(), List.of())));
         }
         return itemRequestDtos;
     }
@@ -76,7 +76,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         List<Item> items = itemRepository.findAllByRequestId(requestId);
 
         ItemRequestDto itemRequestDto = itemRequestMapper.toItemRequestDto(itemRequest);
-        itemRequestDto.setItems(itemMapper.toItemResponseDto(items));
+        itemRequestDto.setItems(ItemMapper.toItemResponseDto(items));
         return itemRequestDto;
     }
 
