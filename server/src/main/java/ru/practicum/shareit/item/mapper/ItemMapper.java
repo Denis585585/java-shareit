@@ -6,6 +6,7 @@ import org.mapstruct.MappingConstants;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemResponseDto;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
@@ -18,7 +19,9 @@ public interface ItemMapper {
     @Mapping(source = "itemDto.id", target = "id")
     @Mapping(source = "itemDto.name", target = "name")
     @Mapping(source = "user", target = "owner")
-    Item toItem(ItemDto itemDto, User user);
+    @Mapping(source = "itemDto.description", target = "description")
+    @Mapping(source = "request", target = "request")
+    Item toItem(ItemDto itemDto, User user, ItemRequest request);
 
     @Mapping(source = "item.owner.id", target = "ownerId")
     ItemResponseDto toItemResponseDto(Item item);
